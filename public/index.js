@@ -84,37 +84,37 @@ function populateChart() {
 function sendTransaction(isAdding) {
   let nameEl = document.querySelector("#t-name");
   let amountEl = document.querySelector("#t-amount");
-  let errorEl = document.querySelector(".form.error");
+  let errorEl = document.querySelector(".form .error");
 
-  // Validate form
+  // validate form
   if (nameEl.value === "" || amountEl.value === "") {
     errorEl.textContent = "Missing Information";
     return;
-
   } else {
     errorEl.textContent = "";
   }
 
-
-  // Create record
+  // create record
   let transaction = {
     name: nameEl.value,
     value: amountEl.value,
     date: new Date().toISOString()
   };
-  // If subtracting funds, convert amount to negative number
+
+  // if subtracting funds, convert amount to negative number
   if (!isAdding) {
     transaction.value *= -1;
   }
-  // Add to beginning of current array of data
+
+  // add to beginning of current array of data
   transactions.unshift(transaction);
 
-  // Re-run functions to populate ui with new record
+  // re-run logic to populate ui with new record
   populateChart();
   populateTable();
   populateTotal();
 
-  // Send to server
+  // also send to server
   fetch("/api/transaction", {
     method: "POST",
     body: JSON.stringify(transaction),
@@ -126,21 +126,24 @@ function sendTransaction(isAdding) {
     .then(response => {
       // Update cache by fetching all transactions, including the one just posted
       fetch("/api/transaction/all");
+
+      // HTTP response for post route
       return response.json();
     })
     .then(data => {
       if (data.errors) {
-        errorEl.textContent = "Missing Information"
+        errorEl.textContent = "Missing Information";
       } else {
-        // Clear form
+        // clear form
         nameEl.value = "";
         amountEl.value = "";
       }
     })
     .catch(err => {
-      // Fetch failed, so save in indexed db
+      // fetch failed, so save in indexed db
       saveRecord(transaction);
-      // Clear form
+
+      // clear form
       nameEl.value = "";
       amountEl.value = "";
     });
