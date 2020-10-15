@@ -6,7 +6,7 @@ fetch("/api/transaction/all")
     return response.json();
   })
   .then(data => {
-    // Save db data on global variable
+    // save db data on global variablez
     transactions = data;
 
     populateTotal();
@@ -32,32 +32,35 @@ function populateTable() {
   tbody.innerHTML = "";
 
   transactions.forEach(transaction => {
+    // create and populate a table row
     let tr = document.createElement("tr");
     tr.innerHTML = `
-            <td>${transaction.name}</td>
-            <td>${transaction.value}</td>
-          `;
+      <td>${transaction.name}</td>
+      <td>${transaction.value}</td>
+    `;
+
     tbody.appendChild(tr);
   });
 }
 
 function populateChart() {
-  // Copy array and reverse it
-  // https://www.w3schools.com/jsref/jsref_slice_array.asp
+  // copy array and reverse it
   let reversed = transactions.slice().reverse();
   let sum = 0;
 
-  // Create date labels for chart
+  // create date labels for chart
   let labels = reversed.map(t => {
     let date = new Date(t.date);
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}}`;
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   });
-  // Create incremental values for chart
+
+  // create incremental values for chart
   let data = reversed.map(t => {
     sum += parseInt(t.value);
     return sum;
   });
-  // Remove old chart if it exists
+
+  // remove old chart if it exists
   if (myChart) {
     myChart.destroy();
   }
@@ -68,15 +71,12 @@ function populateChart() {
     type: "line",
     data: {
       labels,
-      datasets: [
-        {
-          label: "Total Over Time",
-          fill: true,
-          borderColor: "rgb(91, 155, 105)",
-          backgroundColor: "rgb(91, 155, 105, 0.5)",
-          data
-        }
-      ]
+      datasets: [{
+        label: "Total Over Time",
+        fill: true,
+        backgroundColor: "#6666ff",
+        data
+    }]
     }
   });
 }
@@ -158,7 +158,7 @@ document.querySelector("#sub-btn").onclick = function() {
 };
 
 // 3 seconds after page load, fetch API data
-// So that service worker will cache it without user having to refresh page
+// so that service worker will cache it without user having to refresh page
 window.addEventListener("load", () => {
   window.setTimeout(() => {
     fetch("/api/transaction/all").then(response => {

@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 // Compression in Node.js and Express decreases the downloadable amount of data that’s served to users. 
 const compression = require("compression");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4400;
 
 const app = express();
 
