@@ -22,7 +22,7 @@
 
 > An online/offline Progressive Web App that tracks account balance, withdrawals, and deposits. It can be downloaded and used online or offline due to the inclusion of an app manifest and service worker. Data entered in offline mode is stored client-side in IndexedDB, then stored server-side in MongoDB once online again. The app also uses compression to optimize performance.
 
-<img src="./public/img/Transaction-Tracker.png" width="100%" height="auto">
+<img src="http://drive.google.com/uc?id=1iDj5bMqQ25BuxfZuB6PNE7Z1UqgKOhbL" width ="80%" height="auto">
 
 <img src="https://thumbs.gfycat.com/LikelyMildAlbertosaurus-size_restricted.gif" width = "800">
 
